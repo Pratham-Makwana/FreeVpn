@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get/get.dart';
+import 'package:vpn_basic_project/widgets/count_down_timer.dart';
 import 'package:vpn_basic_project/widgets/home_card.dart';
 
 import '../main.dart';
@@ -21,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String _vpnState = VpnEngine.vpnDisconnected;
   List<VpnConfig> _listVpn = [];
   VpnConfig? _selectedVpn;
+
+  final RxBool _startTimer = false.obs;
 
   @override
   void initState() {
@@ -77,14 +81,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       bottomNavigationBar: _changeLocation(),
-      body: Column(mainAxisSize: MainAxisSize.min, children: [
-        /// for adding some space
-        SizedBox(
-          height: mq.height * .02,
-          width: double.maxFinite,
-        ),
-        _vpnButton(),
 
+      /// /body
+      body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        _vpnButton(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -116,9 +116,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 )),
           ],
-        ),
-        SizedBox(
-          height: mq.height * .02,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -178,7 +175,9 @@ class _HomeScreenState extends State<HomeScreen> {
             button: true,
             child: InkWell(
               borderRadius: BorderRadius.circular(100),
-              onTap: () {},
+              onTap: () {
+                _startTimer.value = !_startTimer.value;
+              },
               child: Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -227,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
           /// connection status label
           Container(
             margin:
-                EdgeInsets.only(top: mq.height * .015, bottom: mq.height * .05),
+                EdgeInsets.only(top: mq.height * .015, bottom: mq.height * .02),
             padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
             decoration: BoxDecoration(
                 color: Colors.blue, borderRadius: BorderRadius.circular(15)),
@@ -238,10 +237,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontSize: 13,
               ),
             ),
-          )
+          ),
+
+          Obx(() => CountDownTimer(startTimer: _startTimer.value)),
         ],
       );
 
+  /// bottom nav to change location
   Widget _changeLocation() => SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: mq.width * .04),
@@ -274,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Spacer(),
 
               /// icon
-               CircleAvatar(
+              CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Icon(
                   Icons.keyboard_arrow_right_rounded,
