@@ -6,6 +6,7 @@ import 'package:flutter/scheduler.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
+import 'package:vpn_basic_project/screens/location_screen.dart';
 import 'package:vpn_basic_project/widgets/count_down_timer.dart';
 import 'package:vpn_basic_project/widgets/home_card.dart';
 
@@ -245,46 +246,52 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// bottom nav to change location
   Widget _changeLocation() => SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: mq.width * .04),
-          color: Colors.blue,
-          height: 60,
-          child: Row(
-            children: [
-              /// icon
-              Icon(
-                CupertinoIcons.globe,
-                color: Colors.white,
-                size: 28,
-              ),
-
-              /// for adding some space
-              SizedBox(
-                width: 10,
-              ),
-
-              /// text
-              Text(
-                'Change Location',
-                style: TextStyle(
+        child: Semantics(
+          button: true,
+          child: InkWell(
+            onTap: () => Get.to(() => LocationScreen()),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: mq.width * .04),
+              color: Colors.blue,
+              height: 60,
+              child: Row(
+                children: [
+                  /// icon
+                  Icon(
+                    CupertinoIcons.globe,
                     color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500),
+                    size: 28,
+                  ),
+
+                  /// for adding some space
+                  SizedBox(
+                    width: 10,
+                  ),
+
+                  /// text
+                  Text(
+                    'Change Location',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500),
+                  ),
+
+                  /// for covering available space
+                  Spacer(),
+
+                  /// icon
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      Icons.keyboard_arrow_right_rounded,
+                      color: Colors.blue,
+                      size: 26,
+                    ),
+                  )
+                ],
               ),
-
-              /// for covering available space
-              Spacer(),
-
-              /// icon
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.keyboard_arrow_right_rounded,
-                  color: Colors.blue,
-                  size: 26,
-                ),
-              )
-            ],
+            ),
           ),
         ),
       );
