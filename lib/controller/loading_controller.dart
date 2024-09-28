@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
 
-import '../api.dart';
+import '../api/api.dart';
 
 class LoadingController extends GetxController {
   List<Vpn> vpnList = [];

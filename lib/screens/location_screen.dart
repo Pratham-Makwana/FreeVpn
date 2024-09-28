@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vpn_basic_project/controller/loading_controller.dart';
+import 'package:vpn_basic_project/widgets/vpn_card.dart';
+
+import '../main.dart';
 
 class LocationScreen extends StatefulWidget {
   const LocationScreen({super.key});
@@ -46,8 +49,16 @@ class _LocationScreenState extends State<LocationScreen> {
 
   _vpnData() => ListView.builder(
         itemCount: _controller.vpnList.length,
+        physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.only(
+            left: mq.width * .04,
+            right: mq.width * .04,
+            top: mq.height * .015,
+            bottom: mq.height * .05),
         itemBuilder: (BuildContext context, int index) {
-          return Text(_controller.vpnList[index].hostname);
+          return VpnCard(
+            vpn: _controller.vpnList[index],
+          );
         },
       );
 
