@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:vpn_basic_project/controller/home_controller.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
 
 import '../main.dart';
@@ -13,6 +15,7 @@ class VpnCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<HomeController>();
     return Card(
       elevation: 7,
       margin: EdgeInsets.symmetric(vertical: mq.height * .01),
@@ -20,10 +23,14 @@ class VpnCard extends StatelessWidget {
       child: Semantics(
         button: true,
         child: InkWell(
-          onTap: (){},
+          onTap: () {
+            controller.vpn.value = vpn;
+            Get.back();
+          },
           borderRadius: BorderRadius.circular(15),
           child: ListTile(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
 
             /// flags
             leading: Container(

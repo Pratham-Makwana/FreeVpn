@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vpn_basic_project/models/vpn.dart';
 import '../services/vpn_engine.dart';
 
 class HomeController extends GetxController {
+  final Rx<Vpn> vpn = Vpn.fromJson({}).obs;
   final vpnState = VpnEngine.vpnDisconnected.obs;
   final RxBool startTimer = false.obs;
 
