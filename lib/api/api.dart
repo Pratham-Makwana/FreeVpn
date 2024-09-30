@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:csv/csv.dart';
 import 'package:http/http.dart';
+import 'package:vpn_basic_project/helper/pref.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
 
 class APIs {
@@ -27,6 +28,8 @@ class APIs {
       log('\ngetVPNServerE: $e');
     }
     vpnList.shuffle();
+
+    if (vpnList.isNotEmpty) Pref.vpnList = vpnList;
     return vpnList;
   }
 }

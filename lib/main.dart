@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:vpn_basic_project/helper/pref.dart';
 
 import 'screens/splash_screen.dart';
 
 /// global object for accessing device screen size
 late Size mq;
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// enter full screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
+  await Pref.initializeHive();
 
   /// for setting orientation to portrait only
   SystemChrome.setPreferredOrientations(

@@ -4,11 +4,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
+import '../helper/pref.dart';
 import '../models/vpn_config.dart';
 import '../services/vpn_engine.dart';
 
 class HomeController extends GetxController {
-  final Rx<Vpn> vpn = Vpn.fromJson({}).obs;
+  final Rx<Vpn> vpn = Pref.vpn.obs;
   final vpnState = VpnEngine.vpnDisconnected.obs;
 
 
@@ -17,6 +18,7 @@ class HomeController extends GetxController {
     if (vpn.value.openVPNConfigDataBase64.isEmpty) return;
 
     if (vpnState.value == VpnEngine.vpnDisconnected) {
+
       log('\nBefore ${vpn.value.openVPNConfigDataBase64}');
 
       /// Base64Decoder convert to into Uint8List

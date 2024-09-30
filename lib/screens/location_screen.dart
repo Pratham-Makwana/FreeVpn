@@ -10,11 +10,11 @@ import '../main.dart';
 class LocationScreen extends StatelessWidget {
   LocationScreen({super.key});
 
-  final _controller = LoadingController();
+  final _controller = LocationController();
 
   @override
   Widget build(BuildContext context) {
-    _controller.getVpnData();
+    if (_controller.vpnList.isEmpty) _controller.getVpnData();
     return Obx(
       () => Scaffold(
         // app bar
@@ -22,8 +22,9 @@ class LocationScreen extends StatelessWidget {
           title: Text('VPN Locations(${_controller.vpnList.length})'),
         ),
 
+        /// Refresh Vpn Data
         floatingActionButton: Padding(
-          padding: EdgeInsets.only(bottom: 10,right: 10),
+          padding: EdgeInsets.only(bottom: 10, right: 10),
           child: FloatingActionButton(
             backgroundColor: Colors.blue,
             onPressed: () => _controller.getVpnData(),
