@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -16,55 +17,17 @@ import '../models/vpn_config.dart';
 import '../models/vpn_status.dart';
 import '../services/vpn_engine.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-class _HomeScreenState extends State<HomeScreen> {
   final _controller = Get.put(HomeController());
 
-  List<VpnConfig> _listVpn = [];
-  VpnConfig? _selectedVpn;
-
   @override
-  void initState() {
-    super.initState();
-
+  Widget build(BuildContext context) {
     ///Add listener to update vpn state
     VpnEngine.vpnStageSnapshot().listen((event) {
       _controller.vpnState.value = event;
     });
-
-    initVpn();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
-
-  void initVpn() async {
-    //sample vpn config file (you can get more from https://www.vpngate.net/)
-    _listVpn.add(VpnConfig(
-        config: await rootBundle.loadString('assets/vpn/japan.ovpn'),
-        country: 'Japan',
-        username: 'vpn',
-        password: 'vpn'));
-
-    _listVpn.add(VpnConfig(
-        config: await rootBundle.loadString('assets/vpn/thailand.ovpn'),
-        country: 'Thailand',
-        username: 'vpn',
-        password: 'vpn'));
-
-    SchedulerBinding.instance.addPostFrameCallback(
-        (t) => setState(() => _selectedVpn = _listVpn.first));
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(
@@ -186,21 +149,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _connectClick() {
-    ///Stop right here if user not select a vpn
-    if (_selectedVpn == null) return;
-
-    if (_controller.vpnState.value == VpnEngine.vpnDisconnected) {
-      ///Start if stage is disconnected
-      VpnEngine.startVpn(_selectedVpn!);
-      _controller.startTimer.value = true;
-    } else {
-      ///Stop if stage is "not" disconnected
-      _controller.startTimer.value = false;
-      VpnEngine.stopVpn();
-    }
-  }
-
   Widget _vpnButton() => Column(
         children: [
           /// vpn button
@@ -209,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: InkWell(
               borderRadius: BorderRadius.circular(100),
               onTap: () {
-                _connectClick();
+                _controller.connectToVpn();
               },
               child: Container(
                 padding: EdgeInsets.all(16),
@@ -276,7 +224,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          Obx(() => CountDownTimer(startTimer: _controller.startTimer.value)),
+          Obx(() => CountDownTimer(
+              startTimer: _controller.vpnState.value == VpnEngine.vpnConnected)),
         ],
       );
 

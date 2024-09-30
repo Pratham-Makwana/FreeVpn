@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -6,38 +7,33 @@ import 'package:vpn_basic_project/widgets/vpn_card.dart';
 
 import '../main.dart';
 
-class LocationScreen extends StatefulWidget {
-  const LocationScreen({super.key});
+class LocationScreen extends StatelessWidget {
+  LocationScreen({super.key});
 
-  @override
-  State<LocationScreen> createState() => _LocationScreenState();
-}
-
-class _LocationScreenState extends State<LocationScreen> {
   final _controller = LoadingController();
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _controller.getVpnData();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _controller.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    _controller.getVpnData();
     return Obx(
       () => Scaffold(
         // app bar
         appBar: AppBar(
           title: Text('VPN Locations(${_controller.vpnList.length})'),
         ),
+
+        floatingActionButton: Padding(
+          padding: EdgeInsets.only(bottom: 10,right: 10),
+          child: FloatingActionButton(
+            backgroundColor: Colors.blue,
+            onPressed: () => _controller.getVpnData(),
+            child: Icon(
+              CupertinoIcons.refresh,
+              color: Colors.white,
+            ),
+          ),
+        ),
+
         body: _controller.isLoading.value
             ? _loadingWidget()
             : _controller.vpnList.isEmpty

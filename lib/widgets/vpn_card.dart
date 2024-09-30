@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpn_basic_project/controller/home_controller.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
+import 'package:vpn_basic_project/services/vpn_engine.dart';
 
 import '../main.dart';
 
@@ -26,6 +27,15 @@ class VpnCard extends StatelessWidget {
           onTap: () {
             controller.vpn.value = vpn;
             Get.back();
+
+            /// checking that vpn is connected so disconnect and connect to vpn that we select
+            if (controller.vpnState == VpnEngine.vpnConnected) {
+              VpnEngine.stopVpn();
+              Future.delayed(
+                  Duration(seconds: 2), () => controller.connectToVpn());
+            } else {
+              controller.connectToVpn();
+            }
           },
           borderRadius: BorderRadius.circular(15),
           child: ListTile(
@@ -43,6 +53,7 @@ class VpnCard extends StatelessWidget {
                   child: Image.asset(
                     "assets/flags/${vpn.countryShort.toLowerCase()}.png",
                     height: 40,
+                    width: mq.width * .15,
                     fit: BoxFit.cover,
                   ),
                 )),

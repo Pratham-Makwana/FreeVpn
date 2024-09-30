@@ -9,6 +9,7 @@ class LoadingController extends GetxController {
 
   Future<void> getVpnData() async {
     isLoading.value = true;
+    vpnList.clear();
     vpnList = await APIs.getVPNServer();
     isLoading.value = false;
   }

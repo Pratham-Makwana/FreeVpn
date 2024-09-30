@@ -1,14 +1,45 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
+import '../models/vpn_config.dart';
 import '../services/vpn_engine.dart';
 
 class HomeController extends GetxController {
   final Rx<Vpn> vpn = Vpn.fromJson({}).obs;
   final vpnState = VpnEngine.vpnDisconnected.obs;
-  final RxBool startTimer = false.obs;
 
-  Future<void> initialization() async {}
+
+  void connectToVpn() {
+    ///Stop right here if user not select a vpn
+    if (vpn.value.openVPNConfigDataBase64.isEmpty) return;
+
+    if (vpnState.value == VpnEngine.vpnDisconnected) {
+      log('\nBefore ${vpn.value.openVPNConfigDataBase64}');
+
+      /// Base64Decoder convert to into Uint8List
+      final data = Base64Decoder().convert(vpn.value.openVPNConfigDataBase64);
+
+      /// Utf8Decoder convert to String
+      final config = Utf8Decoder().convert(data);
+
+      final vpnConfig = VpnConfig(
+          country: vpn.value.countryLong,
+          username: 'vpn',
+          password: 'vpn',
+          config: config);
+      log('\nAfter $vpnConfig');
+
+      ///Start if stage is disconnected
+      VpnEngine.startVpn(vpnConfig);
+
+    } else {
+      ///Stop if stage is "not" disconnected
+      VpnEngine.stopVpn();
+    }
+  }
 
   /// vpn button color
   Color get getButtonColor {
