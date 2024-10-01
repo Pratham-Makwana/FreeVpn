@@ -44,7 +44,7 @@ class HomeCard extends StatelessWidget {
               style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black54),
+                  color: Theme.of(context).lightText),
             ),
           ],
         ));

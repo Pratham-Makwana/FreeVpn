@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:vpn_basic_project/helper/pref.dart';
 import 'package:vpn_basic_project/screens/home_screen.dart';
 
 import '../main.dart';
@@ -52,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   fontWeight: FontWeight.w700,
                   fontSize: 22,
                   letterSpacing: 1,
-                  color: Colors.black87),
+                  color: Theme.of(context).lightText),
             ),
           )
         ],

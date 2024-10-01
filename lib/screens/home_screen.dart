@@ -8,6 +8,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
 import 'package:vpn_basic_project/controller/home_controller.dart';
+import 'package:vpn_basic_project/helper/pref.dart';
 import 'package:vpn_basic_project/screens/location_screen.dart';
 import 'package:vpn_basic_project/widgets/count_down_timer.dart';
 import 'package:vpn_basic_project/widgets/home_card.dart';
@@ -36,7 +37,10 @@ class HomeScreen extends StatelessWidget {
         title: Text('OpenVPN Demo'),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.changeThemeMode(Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                Pref.isDarkMode = !Pref.isDarkMode;
+              },
               icon: Icon(
                 Icons.brightness_4_outlined,
                 size: 26,
@@ -50,7 +54,7 @@ class HomeScreen extends StatelessWidget {
               ))
         ],
       ),
-      bottomNavigationBar: _changeLocation(),
+      bottomNavigationBar: _changeLocation(context),
 
       /// /body
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -230,14 +234,14 @@ class HomeScreen extends StatelessWidget {
       );
 
   /// bottom nav to change location
-  Widget _changeLocation() => SafeArea(
+  Widget _changeLocation(BuildContext context) => SafeArea(
         child: Semantics(
           button: true,
           child: InkWell(
             onTap: () => Get.to(() => LocationScreen()),
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: mq.width * .04),
-              color: Colors.blue,
+              color: Theme.of(context).bottomNav,
               height: 60,
               child: Row(
                 children: [

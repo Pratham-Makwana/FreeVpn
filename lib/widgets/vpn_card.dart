@@ -19,6 +19,7 @@ class VpnCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<HomeController>();
     return Card(
+      color: Theme.of(context).vpnCard,
       elevation: 7,
       margin: EdgeInsets.symmetric(vertical: mq.height * .01),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -86,7 +87,7 @@ class VpnCard extends StatelessWidget {
                 Text(vpn.numVpnSessions.toString(),
                     style: TextStyle(
                         fontSize: 13,
-                        color: Colors.black54,
+                        color: Theme.of(context).lightText,
                         fontWeight: FontWeight.w500)),
                 SizedBox(
                   width: 4,
