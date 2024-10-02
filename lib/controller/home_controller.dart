@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vpn_basic_project/helper/ad_helper.dart';
 import 'package:vpn_basic_project/helper/my_dialogs.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
 import '../helper/pref.dart';
@@ -16,7 +17,8 @@ class HomeController extends GetxController {
   void connectToVpn() {
     ///Stop right here if user not select a vpn
     if (vpn.value.openVPNConfigDataBase64.isEmpty) {
-      MyDialogs.success(msg: 'Select a Location by clicking \'Change Location\'');
+      MyDialogs.info(
+          msg: 'Select a Location by clicking \'Change Location\'');
       return;
     }
 
@@ -37,7 +39,9 @@ class HomeController extends GetxController {
       log('\nAfter $vpnConfig');
 
       ///Start if stage is disconnected
-      VpnEngine.startVpn(vpnConfig);
+      AdHelper.showInterstitialAd(onComplete: () async {
+        await VpnEngine.startVpn(vpnConfig);
+      });
     } else {
       ///Stop if stage is "not" disconnected
       VpnEngine.stopVpn();

@@ -28,4 +28,8 @@ class MyDialogs {
       colorText: Colors.white,
     );
   }
+
+  static showProgress() {
+    Get.dialog(Center(child: CircularProgressIndicator(strokeWidth: 2)));
+  }
 }
