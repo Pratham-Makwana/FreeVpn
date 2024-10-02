@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpn_basic_project/controller/home_controller.dart';
+import 'package:vpn_basic_project/helper/my_dialogs.dart';
 import 'package:vpn_basic_project/helper/pref.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
 import 'package:vpn_basic_project/services/vpn_engine.dart';
@@ -30,6 +31,8 @@ class VpnCard extends StatelessWidget {
             controller.vpn.value = vpn;
             Pref.vpn = vpn;
             Get.back();
+
+            MyDialogs.success(msg: 'Connecting VPN Location...');
 
             /// checking that vpn is connected so disconnect and connect to vpn that we select
             if (controller.vpnState == VpnEngine.vpnConnected) {

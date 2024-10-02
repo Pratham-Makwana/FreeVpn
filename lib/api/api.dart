@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:csv/csv.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:vpn_basic_project/helper/my_dialogs.dart';
 import 'package:vpn_basic_project/helper/pref.dart';
 import 'package:vpn_basic_project/models/ip_details.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
@@ -28,6 +29,7 @@ class APIs {
 
       log(vpnList.first.hostname);
     } catch (e) {
+      MyDialogs.error(msg: 'Check Internet / Try Later');
       log('\ngetVPNServerE: $e');
     }
     vpnList.shuffle();
@@ -43,6 +45,7 @@ class APIs {
       log(data.toString());
       ipData.value = IPDetails.fromJson(data);
     } catch (e) {
+      MyDialogs.error(msg: 'Check Internet / Try Later');
       log('\getIPDetailsE: $e');
     }
   }

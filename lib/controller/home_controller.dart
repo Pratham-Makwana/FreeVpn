@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vpn_basic_project/helper/my_dialogs.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
 import '../helper/pref.dart';
 import '../models/vpn_config.dart';
@@ -12,13 +13,14 @@ class HomeController extends GetxController {
   final Rx<Vpn> vpn = Pref.vpn.obs;
   final vpnState = VpnEngine.vpnDisconnected.obs;
 
-
   void connectToVpn() {
     ///Stop right here if user not select a vpn
-    if (vpn.value.openVPNConfigDataBase64.isEmpty) return;
+    if (vpn.value.openVPNConfigDataBase64.isEmpty) {
+      MyDialogs.success(msg: 'Select a Location by clicking \'Change Location\'');
+      return;
+    }
 
     if (vpnState.value == VpnEngine.vpnDisconnected) {
-
       log('\nBefore ${vpn.value.openVPNConfigDataBase64}');
 
       /// Base64Decoder convert to into Uint8List
@@ -36,7 +38,6 @@ class HomeController extends GetxController {
 
       ///Start if stage is disconnected
       VpnEngine.startVpn(vpnConfig);
-
     } else {
       ///Stop if stage is "not" disconnected
       VpnEngine.stopVpn();
