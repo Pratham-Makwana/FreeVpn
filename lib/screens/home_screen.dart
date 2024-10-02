@@ -1,20 +1,13 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
 import 'package:vpn_basic_project/controller/home_controller.dart';
 import 'package:vpn_basic_project/helper/pref.dart';
 import 'package:vpn_basic_project/screens/location_screen.dart';
+import 'package:vpn_basic_project/screens/network_test_screen.dart';
 import 'package:vpn_basic_project/widgets/count_down_timer.dart';
 import 'package:vpn_basic_project/widgets/home_card.dart';
-
 import '../main.dart';
-import '../models/vpn_config.dart';
 import '../models/vpn_status.dart';
 import '../services/vpn_engine.dart';
 
@@ -38,7 +31,8 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Get.changeThemeMode(Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                Get.changeThemeMode(
+                    Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
                 Pref.isDarkMode = !Pref.isDarkMode;
               },
               icon: Icon(
@@ -47,7 +41,9 @@ class HomeScreen extends StatelessWidget {
               )),
           IconButton(
               padding: EdgeInsets.only(right: 8),
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => NetworkTestScreen());
+              },
               icon: Icon(
                 CupertinoIcons.info,
                 size: 26,
@@ -229,7 +225,8 @@ class HomeScreen extends StatelessWidget {
           ),
 
           Obx(() => CountDownTimer(
-              startTimer: _controller.vpnState.value == VpnEngine.vpnConnected)),
+              startTimer:
+                  _controller.vpnState.value == VpnEngine.vpnConnected)),
         ],
       );
 
