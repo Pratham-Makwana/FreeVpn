@@ -17,7 +17,7 @@ class HomeController extends GetxController {
   void connectToVpn() {
     ///Stop right here if user not select a vpn
     if (vpn.value.openVPNConfigDataBase64.isEmpty) {
-      MyDialogs.info(
+      MyDialogs.success(
           msg: 'Select a Location by clicking \'Change Location\'');
       return;
     }
@@ -41,6 +41,7 @@ class HomeController extends GetxController {
       ///Start if stage is disconnected
       AdHelper.showInterstitialAd(onComplete: () async {
         await VpnEngine.startVpn(vpnConfig);
+        ;
       });
     } else {
       ///Stop if stage is "not" disconnected

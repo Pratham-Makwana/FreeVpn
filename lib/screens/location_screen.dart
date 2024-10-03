@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vpn_basic_project/controller/loading_controller.dart';
+import 'package:vpn_basic_project/controller/native_ad_controller.dart';
+import 'package:vpn_basic_project/helper/ad_helper.dart';
 import 'package:vpn_basic_project/widgets/vpn_card.dart';
 
 import '../main.dart';
@@ -11,16 +14,24 @@ class LocationScreen extends StatelessWidget {
   LocationScreen({super.key});
 
   final _controller = LocationController();
+  final _adController = NativeAdController();
 
   @override
   Widget build(BuildContext context) {
     if (_controller.vpnList.isEmpty) _controller.getVpnData();
+
+    _adController.ad = AdHelper.loadNativeAd(controller: _adController);
     return Obx(
       () => Scaffold(
         // app bar
         appBar: AppBar(
           title: Text('VPN Locations(${_controller.vpnList.length})'),
         ),
+
+        bottomNavigationBar:
+            _adController.ad != null && _adController.adLoaded.isTrue
+                ? SizedBox(height: 80, child: AdWidget(ad: _adController.ad!) )
+                : null,
 
         /// Refresh Vpn Data
         floatingActionButton: Padding(
