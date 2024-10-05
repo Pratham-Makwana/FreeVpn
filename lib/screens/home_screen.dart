@@ -7,6 +7,8 @@ import 'package:vpn_basic_project/screens/location_screen.dart';
 import 'package:vpn_basic_project/screens/network_test_screen.dart';
 import 'package:vpn_basic_project/widgets/count_down_timer.dart';
 import 'package:vpn_basic_project/widgets/home_card.dart';
+import 'package:vpn_basic_project/widgets/watch_ad_dialog.dart';
+import '../helper/ad_helper.dart';
 import '../main.dart';
 import '../models/vpn_status.dart';
 import '../services/vpn_engine.dart';
@@ -31,9 +33,17 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Get.changeThemeMode(
-                    Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-                Pref.isDarkMode = !Pref.isDarkMode;
+                Get.dialog(WatchAdDialog(onComplete: (){
+                  AdHelper.showRewardAd(onComplete: (){
+                    Get.changeThemeMode(
+                        Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                    Pref.isDarkMode = !Pref.isDarkMode;
+                  });
+                }));
+
+                // Get.changeThemeMode(
+                //     Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                // Pref.isDarkMode = !Pref.isDarkMode;
               },
               icon: Icon(
                 Icons.brightness_4_outlined,

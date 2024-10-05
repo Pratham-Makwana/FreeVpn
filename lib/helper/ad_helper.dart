@@ -59,4 +59,26 @@ class AdHelper {
         ))
       ..load();
   }
+
+  static void showRewardAd({required VoidCallback onComplete}) {
+    MyDialogs.showProgress();
+    RewardedAd.load(
+      adUnitId: 'ca-app-pub-3940256099942544/5224354917',
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          Get.back();
+          // reward listener
+          ad.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+            onComplete();
+          });
+        },
+        onAdFailedToLoad: (err) {
+          Get.back();
+          print('Failed to load an interstitial ad: ${err.message}');
+         // onComplete();
+        },
+      ),
+    );
+  }
 }
