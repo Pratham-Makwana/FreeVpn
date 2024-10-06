@@ -1,11 +1,10 @@
 import 'dart:developer';
 import 'dart:ui';
-
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:vpn_basic_project/helper/my_dialogs.dart';
-
 import '../controller/native_ad_controller.dart';
+import 'config.dart';
 
 class AdHelper {
   // For Initializing ads sdk
@@ -15,8 +14,10 @@ class AdHelper {
 
   static void showInterstitialAd({required VoidCallback onComplete}) {
     MyDialogs.showProgress();
+
+    log("Interstitial Ad Id: ${Config.interstitialAd}");
     InterstitialAd.load(
-      adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+      adUnitId: Config.interstitialAd,
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
@@ -39,8 +40,9 @@ class AdHelper {
   }
 
   static NativeAd loadNativeAd({required NativeAdController controller}) {
+    log("Native Ad Id: ${Config.nativeAd}");
     return NativeAd(
-        adUnitId: 'ca-app-pub-3940256099942544/2247696110',
+        adUnitId: Config.nativeAd,
         listener: NativeAdListener(
           onAdLoaded: (ad) {
             log('$NativeAd loaded.');
@@ -62,8 +64,9 @@ class AdHelper {
 
   static void showRewardAd({required VoidCallback onComplete}) {
     MyDialogs.showProgress();
+    log("RewardAd Id: ${Config.rewardedAd}");
     RewardedAd.load(
-      adUnitId: 'ca-app-pub-3940256099942544/5224354917',
+      adUnitId: Config.rewardedAd,
       request: AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
@@ -76,7 +79,7 @@ class AdHelper {
         onAdFailedToLoad: (err) {
           Get.back();
           print('Failed to load an interstitial ad: ${err.message}');
-         // onComplete();
+          // onComplete();
         },
       ),
     );

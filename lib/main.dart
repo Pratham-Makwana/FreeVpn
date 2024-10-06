@@ -1,10 +1,12 @@
+import "package:firebase_core/firebase_core.dart";
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:vpn_basic_project/helper/ad_helper.dart';
+import 'package:vpn_basic_project/helper/config.dart';
 import 'package:vpn_basic_project/helper/pref.dart';
-
+import 'firebase_options.dart';
 import 'screens/splash_screen.dart';
 
 /// global object for accessing device screen size
@@ -16,6 +18,13 @@ Future<void> main() async {
   /// enter full screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
+  /// firebase initialization
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  /// initializing remote config
+  await Config.initConfig();
   await Pref.initializeHive();
 
   await AdHelper.initAds();
@@ -64,7 +73,9 @@ class MyApp extends StatelessWidget {
 }
 
 extension AppTheme on ThemeData {
-  Color get lightText => Pref.isDarkMode ? Colors.white70: Colors.black54;
-  Color get bottomNav => Pref.isDarkMode ? Colors.white12: Colors.blue;
-  Color get vpnCard => Pref.isDarkMode ? Colors.white12: Colors.white;
+  Color get lightText => Pref.isDarkMode ? Colors.white70 : Colors.black54;
+
+  Color get bottomNav => Pref.isDarkMode ? Colors.white12 : Colors.blue;
+
+  Color get vpnCard => Pref.isDarkMode ? Colors.white12 : Colors.white;
 }

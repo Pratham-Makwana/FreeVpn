@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "919106092734",
+    "project_id": "free-vpn-94dbe",
+    "storage_bucket": "free-vpn-94dbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919106092734:android:8f4991c8d7c777676328ef",
+        "android_client_info": {
+          "package_name": "com.pratham.freeVpn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzLqOZhSH3OD6C_MUIPSXEflyfvHQKeHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
