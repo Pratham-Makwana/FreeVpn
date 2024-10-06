@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpn_basic_project/controller/home_controller.dart';
+import 'package:vpn_basic_project/helper/config.dart';
 import 'package:vpn_basic_project/helper/pref.dart';
 import 'package:vpn_basic_project/screens/location_screen.dart';
 import 'package:vpn_basic_project/screens/network_test_screen.dart';
@@ -33,8 +34,17 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Get.dialog(WatchAdDialog(onComplete: (){
-                  AdHelper.showRewardAd(onComplete: (){
+                // hideAds
+                if (Config.hideAds) {
+                  Get.changeThemeMode(
+                      Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                  Pref.isDarkMode = !Pref.isDarkMode;
+                  return;
+                }
+                // ads dialog
+                Get.dialog(WatchAdDialog(onComplete: () {
+                  // Watch Ads to gain reward
+                  AdHelper.showRewardAd(onComplete: () {
                     Get.changeThemeMode(
                         Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
                     Pref.isDarkMode = !Pref.isDarkMode;

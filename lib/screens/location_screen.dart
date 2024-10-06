@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:vpn_basic_project/controller/loading_controller.dart';
 import 'package:vpn_basic_project/controller/native_ad_controller.dart';
 import 'package:vpn_basic_project/helper/ad_helper.dart';
+import 'package:vpn_basic_project/helper/config.dart';
 import 'package:vpn_basic_project/widgets/vpn_card.dart';
 
 import '../main.dart';
@@ -29,8 +30,10 @@ class LocationScreen extends StatelessWidget {
         ),
 
         bottomNavigationBar:
+            // If native ads throw the error
+            // Config.hideAds ? null :
             _adController.ad != null && _adController.adLoaded.isTrue
-                ? SizedBox(height: 80, child: AdWidget(ad: _adController.ad!) )
+                ? SizedBox(height: 80, child: AdWidget(ad: _adController.ad!))
                 : null,
 
         /// Refresh Vpn Data

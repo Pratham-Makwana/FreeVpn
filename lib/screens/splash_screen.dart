@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:vpn_basic_project/helper/ad_helper.dart';
+import 'package:vpn_basic_project/helper/config.dart';
 import 'package:vpn_basic_project/helper/pref.dart';
 import 'package:vpn_basic_project/screens/home_screen.dart';
 
@@ -21,6 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(Duration(milliseconds: 2000), () {
       /// exit full-screen
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+      AdHelper.precacheInterstitialAd();
+      AdHelper.precacheNativeAd();
 
       /// navigate to home
       Get.off(() => HomeScreen());

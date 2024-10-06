@@ -28,10 +28,12 @@ class Config {
     });
   }
 
-  static bool get show_ads => _config.getBool('show_ads');
+  static bool get _showAds => _config.getBool('show_ads');
 
   // Ad Ids
   static String get rewardedAd => _config.getString('rewarded_ad');
   static String get nativeAd=> _config.getString('native_ad');
   static String get interstitialAd => _config.getString('interstitial_ad');
+
+  static bool get hideAds => !_showAds;
 }
